@@ -7,6 +7,14 @@ import CartItem from "./CartItem";
 const Cart = (props) => {
   const Cartctx = useContext(Itemscontext);
 
+  const AddItemHandler = (items) => {
+    Cartctx.AddItem({ ...items, amount: 1 });
+  };
+
+  const OnRemoveItemHandler = (id) => {
+    Cartctx.RemoveItem(id);
+  };
+
   const cartItems = (
     <ul className={classes["cart-items"]}>
       {Cartctx.Items.map((items) => (
@@ -16,6 +24,8 @@ const Cart = (props) => {
           price={+items.price}
           amount={items.amount}
           name={items.name}
+          onAdd={AddItemHandler.bind(null, items)}
+          onRemove={OnRemoveItemHandler.bind(null, items.id)}
         ></CartItem>
       ))}
     </ul>
@@ -24,7 +34,7 @@ const Cart = (props) => {
   return (
     <Modal onClick={props.onClick}>
       {cartItems}
-      {console.log(Cartctx.Items)}
+
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{`$${Cartctx.TotalAmount.toFixed(2)}`}</span>
