@@ -1,11 +1,13 @@
 import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import Itemscontext from "../../Store/Itemscontext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartItem from "./CartItem";
+import CartForm from "./CartForm";
 
 const Cart = (props) => {
   const Cartctx = useContext(Itemscontext);
+  const [Chechout, setChechout] = useState(false);
 
   const AddItemHandler = (items) => {
     Cartctx.AddItem({ ...items, amount: 1 });
@@ -13,6 +15,10 @@ const Cart = (props) => {
 
   const OnRemoveItemHandler = (id) => {
     Cartctx.RemoveItem(id);
+  };
+
+  const CheckoutHandler = () => {
+    setChechout(true);
   };
 
   const cartItems = (
@@ -39,10 +45,13 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{`$${Cartctx.TotalAmount.toFixed(2)}`}</span>
       </div>
-      <div className={classes.actions}>
-        <button onClick={props.onClick}>Close</button>
-        <button>Order</button>
-      </div>
+      {Chechout && <CartForm onClick={props.onClick}></CartForm>}
+      {!Chechout && (
+        <div className={classes.actions}>
+          <button onClick={props.onClick}>Close</button>
+          <button onClick={CheckoutHandler}>Order</button>
+        </div>
+      )}
     </Modal>
   );
 };
