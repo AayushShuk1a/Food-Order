@@ -5,6 +5,7 @@ const Itemscontext = createContext({
   TotalAmount: 0,
   AddItem: (name) => {},
   RemoveItem: (id) => {},
+  Clrcart: () => {},
 });
 
 export default Itemscontext;

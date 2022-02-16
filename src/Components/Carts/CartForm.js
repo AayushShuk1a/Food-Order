@@ -5,7 +5,7 @@ const isEmpty = (value) => {
   return value.trim() === "";
 };
 const isFivaChar = (value) => {
-  return value.trim().length === 5;
+  return value.trim().length === 6;
 };
 const CartForm = (props) => {
   const [FormIsvalid, setFormIsValid] = useState({
@@ -36,6 +36,19 @@ const CartForm = (props) => {
       street: StrrtisValid,
       postalCode: postalCodeisValid,
       city: cityisValid,
+    });
+    const formIsValid =
+      NameisValid && StrrtisValid && cityisValid && postalCodeisValid;
+
+    if (!formIsValid) {
+      return;
+    }
+
+    props.onConfirm({
+      name: Enteredname,
+      street: EnteredCity,
+      postalCode: postalCode,
+      city: EnteredCity,
     });
   };
 
